@@ -80,16 +80,12 @@ let package = Package(
             name: "NimbusRenderVideoTarget",
             dependencies: ["NimbusRenderTarget", "NimbusRenderVideoKit", .GoogleInteractiveMediaAds]),
         .framework(
-            name: "NimbusMobileFuseTarget",
-            dependencies: ["NimbusRequestTarget", "NimbusRenderTarget", "NimbusMobileFuseKit", "MobileFuseSDK"]),
-        .framework(
             name: "NimbusTarget",
             dependencies: [
                 "NimbusRequestTarget",
                 "NimbusRenderTarget",
                 "NimbusRenderStaticTarget",
                 "NimbusRenderVideoTarget",
-                "NimbusMobileFuseTarget",
                 "NimbusKit"
             ]),
         .target(
@@ -116,10 +112,6 @@ let package = Package(
         .target(
             name: "NimbusVungleKit",
             dependencies: ["NimbusRenderTarget", "NimbusRequestTarget", .Vungle]),
-        .binaryTarget(
-            name: "MobileFuseSDK",
-            url: "https://cdn.mobilefuse.com/sdk/1.7.3.zip",
-            checksum: "34c23742c30a8e4b3b7ff99db1492bc56756b3cf720249ab52abdb0d2731430c"),
         .binaryTarget(
             name: "OMSDK_Adsbynimbus",
             url: "https://adsbynimbus-public.s3.amazonaws.com/iOS/external/omsdk/1.4.12/OMSDK_Adsbynimbus-1.4.12.zip",
@@ -172,10 +164,6 @@ package.targets += [
         name: "NimbusKit",
         url: "https://adsbynimbus-public.s3.amazonaws.com/iOS/sdks/2.20.3/NimbusKit-2.20.3.zip",
         checksum: "e2a491521957bedcb12d990df56b9d9c2092a17de2565b30d2c4e942a15ea107"),
-    .binaryTarget(
-        name: "NimbusMobileFuseKit",
-        url: "https://adsbynimbus-public.s3.amazonaws.com/iOS/sdks/2.20.3/NimbusMobileFuseKit-2.20.3.zip",
-        checksum: "6a8a9e3e72d61ee0f70fad3f23e380a513d2b7ae9ad938c139c743ddead14b4b"),
     .binaryTarget(
         name: "NimbusRenderKit",
         url: "https://adsbynimbus-public.s3.amazonaws.com/iOS/sdks/2.20.3/NimbusRenderKit-2.20.3.zip",
