@@ -79,7 +79,7 @@ let package = Package(
     dependencies: [
         .package(url: "https://github.com/LiveRamp/ats-sdk-ios.git", "1.4.0" ..< "3.0.0"),
         .package(url: "https://github.com/birdrides/mockingbird.git", from: "0.20.0"),
-        .package(url: "https://github.com/Vungle/VungleAdsSDK-SwiftPackageManager.git", from: "7.2.1"),
+        .package(url: "https://github.com/Vungle/VungleAdsSDK-SwiftPackageManager.git", from: "7.4.2"),
         .package(
             url: "https://github.com/googleads/swift-package-manager-google-mobile-ads.git",
             "11.7.0" ..< "13.0.0"
