@@ -53,9 +53,6 @@ let package = Package(
            name: "NimbusMintegralKit",
            targets: ["NimbusMintegralKit"]),
         .library(
-           name: "NimbusMobileFuseKit",
-           targets: ["NimbusMobileFuseKit"]),
-        .library(
            name: "NimbusMolocoKit",
            targets: ["NimbusMolocoKit"]),
         .library(
@@ -133,18 +130,11 @@ let package = Package(
             name: "NimbusMintegralKit",
             dependencies: ["NimbusRenderTarget", "NimbusRequestTarget", .Mintegral]),
         .target(
-            name: "NimbusMobileFuseKit",
-            dependencies: ["NimbusRenderTarget", "NimbusRequestTarget", "MobileFuseSDK"]),
-        .target(
             name: "NimbusMolocoKit",
             dependencies: ["NimbusRenderTarget", "NimbusRequestTarget", "MolocoSDK"]),
         .target(
             name: "NimbusVungleKit",
             dependencies: ["NimbusRenderTarget", "NimbusRequestTarget", .Vungle]),
-        .binaryTarget(
-            name: "MobileFuseSDK",
-            url: "https://cdn.mobilefuse.com/sdk/1.9.3.zip",
-            checksum: "cee2b9a134c8aa16e0312997ede0e4087fc9f24eabfaeaef2e54793285f52e9d"),
         .binaryTarget(
             name: "OMSDK_Adsbynimbus",
             url: "https://adsbynimbus-public.s3.amazonaws.com/iOS/external/omsdk/1.5.6/OMSDK_Adsbynimbus-1.5.6.zip",
