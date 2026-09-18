@@ -2,6 +2,12 @@
 
 Welcome to Nimbus - ads by publishers, for publishers.
 
+## Fork releases
+
+Each `release/{upstream-version}` branch maintains compatibility patches for one exact upstream release. For example, `release/2.34.0` stays on upstream 2.34.0, while `release/2.34.1` maintains upstream 2.34.1 independently.
+
+Releases use immutable `{upstream-version}-locket.N` tags, starting at `1` for each upstream version. Use an exact version requirement when depending on a fork release. Carry applicable fixes forward to newer release branches; preserve existing release tags.
+
 ## Introduction
 
 Nimbus iOS now offers preliminary support for Swift Package Manager. 
