@@ -214,62 +214,93 @@ final class NimbusMolocoAdController: NimbusAdController,
     }
     
     // MARK: - BaseAdDelegate
-    
-    func didLoad(ad: any MolocoAd) {
-        Task { @MainActor in
+
+    private func handleCallback(_ callback: @escaping @MainActor () -> Void) {
+        // Moloco can call its delegates on a worker queue. Nimbus error/event delivery
+        // can synchronously modify views, so enqueue every callback on the main queue.
+        // Using one serial queue also preserves the SDK's callback submission order.
+        DispatchQueue.main.async {
+            callback()
+        }
+    }
+
+    func didLoad(ad _: any MolocoAd) {
+        handleCallback { [self] in
+            guard adState != .destroyed else { return }
             adState = .ready
             sendNimbusEvent(.loaded)
             presentIfNeeded()
         }
     }
-    
-    func failToLoad(ad: any MolocoAd, with error: (any Error)?) {
-        sendNimbusError(
-            NimbusMolocoError(message: "ad failed to load: \(String(describing: error?.localizedDescription))")
-        )
+
+    func failToLoad(ad _: any MolocoAd, with error: (any Error)?) {
+        handleCallback { [self] in
+            sendNimbusError(
+                NimbusMolocoError(message: "ad failed to load: \(String(describing: error?.localizedDescription))")
+            )
+        }
     }
-    
-    func didShow(ad: any MolocoAd) {
-        sendNimbusEvent(.impression)
+
+    func didShow(ad _: any MolocoAd) {
+        handleCallback { [self] in
+            sendNimbusEvent(.impression)
+        }
     }
-    
-    func failToShow(ad: any MolocoAd, with error: (any Error)?) {
-        sendNimbusError(
-            NimbusMolocoError(message: "ad failed to show: \(String(describing: error?.localizedDescription))")
-        )
+
+    func failToShow(ad _: any MolocoAd, with error: (any Error)?) {
+        handleCallback { [self] in
+            sendNimbusError(
+                NimbusMolocoError(message: "ad failed to show: \(String(describing: error?.localizedDescription))")
+            )
+        }
     }
-    
-    func didHide(ad: any MolocoAd) {
-        destroy()
-        sendNimbusEvent(.destroyed)
+
+    func didHide(ad _: any MolocoAd) {
+        handleCallback { [self] in
+            guard adState != .destroyed else { return }
+            destroy()
+            sendNimbusEvent(.destroyed)
+        }
     }
-    
-    func didClick(on ad: any MolocoAd) {
-        sendNimbusEvent(.clicked)
+
+    func didClick(on _: any MolocoAd) {
+        handleCallback { [self] in
+            sendNimbusEvent(.clicked)
+        }
     }
-    
+
     // MARK: - Native delegate
-    
-    func didHandleClick(ad: any MolocoAd) {
-        logger.log("Handled Moloco Click", level: .debug)
+
+    func didHandleClick(ad _: any MolocoAd) {
+        handleCallback { [self] in
+            logger.log("Handled Moloco Click", level: .debug)
+        }
     }
-    
-    func didHandleImpression(ad: any MolocoAd) {
-        logger.log("Handled Moloco Impression", level: .debug)
+
+    func didHandleImpression(ad _: any MolocoAd) {
+        handleCallback { [self] in
+            logger.log("Handled Moloco Impression", level: .debug)
+        }
     }
-    
+
     // MARK: - Rewarded delegate
-    
-    func userRewarded(ad: any MolocoAd) {
-        sendNimbusEvent(.completed)
+
+    func userRewarded(ad _: any MolocoAd) {
+        handleCallback { [self] in
+            sendNimbusEvent(.completed)
+        }
     }
-    
-    func rewardedVideoStarted(ad: any MolocoAd) {
-        logger.log("Moloco Video Started", level: .debug)
+
+    func rewardedVideoStarted(ad _: any MolocoAd) {
+        handleCallback { [self] in
+            logger.log("Moloco Video Started", level: .debug)
+        }
     }
-    
-    func rewardedVideoCompleted(ad: any MolocoAd) {
-        logger.log("Moloco Video Completed", level: .debug)
+
+    func rewardedVideoCompleted(ad _: any MolocoAd) {
+        handleCallback { [self] in
+            logger.log("Moloco Video Completed", level: .debug)
+        }
     }
 }
 

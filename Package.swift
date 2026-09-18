@@ -66,6 +66,9 @@ let package = Package(
         .target(
             name: "NimbusMolocoKit",
             dependencies: ["NimbusRenderTarget", "NimbusRequestTarget", .Moloco]),
+        .testTarget(
+            name: "NimbusMolocoKitTests",
+            dependencies: ["NimbusMolocoKit"]),
         .target(
             name: "NimbusVungleKit",
             dependencies: ["NimbusRenderTarget", "NimbusRequestTarget", .Vungle]),
