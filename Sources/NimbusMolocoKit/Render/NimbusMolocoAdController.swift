@@ -224,9 +224,11 @@ final class NimbusMolocoAdController: NimbusAdController,
     }
     
     func failToLoad(ad: any MolocoAd, with error: (any Error)?) {
-        sendNimbusError(
-            NimbusMolocoError(message: "ad failed to load: \(String(describing: error?.localizedDescription))")
-        )
+        Task { @MainActor in
+            sendNimbusError(
+                NimbusMolocoError(message: "ad failed to load: \(String(describing: error?.localizedDescription))")
+            )
+        }
     }
     
     func didShow(ad: any MolocoAd) {
@@ -234,9 +236,11 @@ final class NimbusMolocoAdController: NimbusAdController,
     }
     
     func failToShow(ad: any MolocoAd, with error: (any Error)?) {
-        sendNimbusError(
-            NimbusMolocoError(message: "ad failed to show: \(String(describing: error?.localizedDescription))")
-        )
+        Task { @MainActor in
+            sendNimbusError(
+                NimbusMolocoError(message: "ad failed to show: \(String(describing: error?.localizedDescription))")
+            )
+        }
     }
     
     func didHide(ad: any MolocoAd) {
